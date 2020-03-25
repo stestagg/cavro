@@ -5,15 +5,16 @@ jobs:
     name: Only run on master
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Only run on master
-      uses: actions/bin/filter@master
-      with:
-        args: branch master
+    - name: Checkout code
+      uses: actions/checkout@v1
     - name: Build & Test
       uses: actions/docker/cli@master
       with:
         args: build -t stestagg/cavro .
+    - name: Only run on master
+      uses: actions/bin/filter@master
+      with:
+        args: branch master
     - name: Run Benchmark
       uses: actions/docker/cli@master
       env:
